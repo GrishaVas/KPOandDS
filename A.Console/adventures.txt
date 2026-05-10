@@ -1,0 +1,1 @@
+{[{City1, [{Sight1, 2}, {Sight2, 1}]}, {City2, [{Sight1, 5}]}]}
