@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35514.174
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DS.Console", "AandDS.Console\AandDS.Console.vcxproj", "{E47BA6ED-E1CE-43AA-B999-16D7705FDC63}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DS.Console", "DS.Console\DS.Console.vcxproj", "{E47BA6ED-E1CE-43AA-B999-16D7705FDC63}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "A.Console", "A.Console\A.Console.vcxproj", "{DDA9546A-6741-4284-84DF-A1F117EF1D44}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "KPO.Console", "A.Console\A.Console.vcxproj", "{DDA9546A-6741-4284-84DF-A1F117EF1D44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
