@@ -16,7 +16,11 @@ void GetCitySights(vector<Adventure> adventures);
 void StringConcatenationProgram();
 char* strcat1(const char* destptr, const char* srcpt);
 
-void MatricesProgrma();
+void MatricesProgram();
+
+int GetTrib(int n);
+void TribonacciProgram();
+int GetTribIteration(int n);
 
 int main()
 {
@@ -29,8 +33,10 @@ int main()
             "   1. String concatenation.\n" <<
             "   2. Adventures.\n" <<
             "   3. Matrix.\n" <<
-            "   4. Exit.\n";
+            "   4. Tribonacci.\n" <<
+            "   5. Exit.\n";
         cout << "Execute program: ";
+        
         cin >> programNumber;
 
         system("cls");
@@ -44,9 +50,12 @@ int main()
             AdventureProgram();
             break;
         case 3:
-            MatricesProgrma();
+            MatricesProgram();
             break;
         case 4:
+            TribonacciProgram();
+            break;
+        case 5:
             return 0;
         default:
             cout << "Wrong program number.\n";
@@ -55,7 +64,51 @@ int main()
     }
 }
 
-void MatricesProgrma()
+void TribonacciProgram()
+{
+    int n = 0;
+    cout << "N: ";
+    cin >> n;
+    cout << "\n";
+
+    cout << GetTrib(n);
+}
+
+int GetTrib(int n)
+{
+    if (n == 0 || n == 1)
+        return 0;
+
+    if (n == 2)
+        return 1;
+    else
+        return GetTrib(n - 1) +
+        GetTrib(n - 2) +
+        GetTrib(n - 3);
+}
+
+int GetTribIteration(int n) {
+    if (n == 0 || n == 1)
+        return 0;
+    if (n == 2)
+        return 1;
+
+    int a = 0;
+    int b = 0;
+    int c = 1;
+    int result = 0;
+
+    for (int i = 3; i <= n; ++i) {
+        result = a + b + c;
+        a = b;
+        b = c;
+        c = result;
+    }
+    return result;
+}
+
+
+void MatricesProgram()
 {
     int matrixLength = 0;
 
@@ -108,14 +161,12 @@ void MatricesProgrma()
         cout << "\n";
     }
 
-    // 1. Transpose
     for (int i = 0; i < matrixLength; i++) {
         for (int j = i + 1; j < matrixLength; j++) {
             std::swap(matrix[i][j], matrix[j][i]);
         }
     }
 
-    // 2. Reverse each column
     for (int j = 0; j < matrixLength; j++) {
         int top = 0;
         int bottom = matrixLength - 1;
@@ -140,12 +191,14 @@ void StringConcatenationProgram()
 {
     string string1;
     string string2;
-
+    cin.ignore();
     cout << "String 1: ";
-    cin >> string1;
+    getline(cin, string1);
+    //cin >> string1;
     cout << "\n";
     cout << "String 2: ";
-    cin >> string2;
+    getline(cin, string2);
+    //cin >> string2;
     cout << "\n";
     char* result = strcat1(string1.data(), string2.data());
     cout << result << "\n";
@@ -211,6 +264,7 @@ void AdventureProgram()
             "   7. Print.\n" <<
             "   8. Exit.\n";
         cout << "Execute program: ";
+
         cin >> programNumber;
 
         system("cls");
@@ -346,7 +400,14 @@ void AddAventure(vector<Adventure> &adventures)
     Adventure adventure;
     int cityCount = 0;
     cout << "City counts: ";
-    cin >> cityCount;
+    //cin >> cityCount;
+    if (!(cin >> cityCount))
+    {
+        cout << "Invalid input.";
+        cin.clear();
+        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        return;
+    }
     cout << "\n";
 
     for (size_t i = 0; i < cityCount; i++)
@@ -355,11 +416,19 @@ void AddAventure(vector<Adventure> &adventures)
         int sightsCount = 0;
 
         cout << "City Name: ";
+        
         cin >> city.Name;
         cout << "\n";
 
         cout << "Sights counts: ";
-        cin >> sightsCount;
+        if (!(cin >> sightsCount))
+        {
+            cout << "Invalid input.";
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            return;
+        }
+
         cout << "\n";
 
         for (size_t j = 0; j < sightsCount; j++)
@@ -371,7 +440,14 @@ void AddAventure(vector<Adventure> &adventures)
             cout << "\n";
 
             cout << "Sight Rate: ";
-            cin >> sight.Rate;
+            //cin >> sight.Rate;
+            if (!(cin >> sight.Rate))
+            {
+                cout << "Invalid input.";
+                cin.clear();
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                return;
+            }
             cout << "\n";
 
             city.Sights.push_back(sight);

@@ -94,97 +94,79 @@ Node* Tree::Insert(Node* node, int value)
 
  Node* Tree::Get(Node* node, int value)
 {
-	if (node == nullptr)
-	{
-		return nullptr;
-	}
+	 node = GetMinNode(node);
 
-	if (node->Value == value)
-	{
-		return node;
-	}
+	 while (node != nullptr)
+	 {
+		 if (node->Value == value)
+		 {
+			 return node;
+		 }
 
-	if (node->Value > value)
-	{
-		Node* left = Get(node->LeftSubNode, value);
+		 if (node->RightThread)
+		 {
+			 node = node->RightSubNode;
+		 }
+		 else
+		 {
+			
+			 return Get(node->RightSubNode, value);
+		 }
+	 }
 
-		return left;
-	}
-
-	Node* right = Get(node->RightSubNode, value);
-
-	return right;
+	 return nullptr;
 }
 
  Node* Tree::Remove(Node* node, int value, Node* parentNode)
  {
-	 if (node == nullptr)
-	 {
-		 return nullptr;
-	 }
+	 if (!node) return nullptr;
 
-	 if (node->Value > value)
-	 {
+	 if (value < node->Value) {
 		 node->LeftSubNode = Remove(node->LeftSubNode, value, node);
-
-		if (node->LeftSubNode != nullptr)
-		{
-			if (node->LeftSubNode->RightSubNode == nullptr || node->LeftSubNode->RightThread)
-			{
-				node->LeftSubNode->RightSubNode = node;
-				node->LeftSubNode->RightThread = true;
-			}
-		}
-	 }
-
-	 if (node->Value < value)
-	 {
-		 node->RightSubNode = Remove(node->RightSubNode, value, parentNode);
-
-		 if (node->RightSubNode == nullptr)
-		 {
-			 node->RightSubNode = parentNode;
-
-			 if (parentNode != nullptr)
-			 {
-				 node->RightThread = true;
-			 }
+		 if (node->LeftSubNode) {
+			 Node* p = node->LeftSubNode;
+			 while (!p->RightThread) p = p->RightSubNode;
+			 p->RightSubNode = node;
+			 p->RightThread = true;
 		 }
+		 return node;
 	 }
 
-	 if (node->Value == value)
-	 {
-		 Node* minNodeParent;
-		 Node* minNode = nullptr;
-
+	 if (value > node->Value) {
 		 if (!node->RightThread)
-		 {
-			 minNode = GetMinNode(node->RightSubNode, minNodeParent);
+			 node->RightSubNode = Remove(node->RightSubNode, value, parentNode);
+		 if (!node->RightSubNode) {
+			 node->RightSubNode = parentNode;
+			 node->RightThread = true;
 		 }
-
-
-		 if (minNode != nullptr)
-		 {
-			 node->Value = minNode->Value;
-			 node->RightSubNode = Remove(node->RightSubNode, minNode->Value, parentNode);
-
-			 return node;
-		 }
-
-		 Node* next = node->LeftSubNode;
-		 Node* maxNode = GetMaxNode(next);
-
-		 if (maxNode != nullptr)
-		 {
-			 maxNode->RightSubNode = nullptr;
-			 maxNode->RightThread = false;
-		 }
-
-		 delete node;
-
-		 return next;
+		 return node;
 	 }
 
+	 if (!node->LeftSubNode) {
+		 Node* temp = node;
+		 node = node->RightThread ? nullptr : node->RightSubNode;
+		 delete temp;
+		 return node;
+	 }
+
+	 if (node->RightThread || node->RightSubNode == nullptr) {
+		 Node* left = node->LeftSubNode;
+		 Node* p = left;
+		 while (!p->RightThread) p = p->RightSubNode;
+		 p->RightSubNode = parentNode;
+		 p->RightThread = true;
+		 delete node;
+		 return left;
+	 }
+
+	 Node* minNode = node->RightSubNode;
+	 while (minNode->LeftSubNode) minNode = minNode->LeftSubNode;
+	 node->Value = minNode->Value;
+	 node->RightSubNode = Remove(node->RightSubNode, minNode->Value, parentNode);
+	 if (!node->RightSubNode) {
+		 node->RightSubNode = parentNode;
+		 node->RightThread = true;
+	 }
 	 return node;
  }
 

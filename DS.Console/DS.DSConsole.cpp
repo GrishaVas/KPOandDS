@@ -13,7 +13,7 @@ void IsBinaryTreeNodeExists(BinaryTree::Tree* tree);
 
 void ThreadedBinaryTreeProgram();
 ThreadedBinaryTree::Tree* CreateRandomThreadedBinaryTree();
-void AddThreadedBinaryTreeNode(ThreadedBinaryTree::Tree tree);
+void AddThreadedBinaryTreeNode(ThreadedBinaryTree::Tree* tree);
 void RemoveThreadedBinaryTreeNode(ThreadedBinaryTree::Tree* tree);
 void IsThreadedBinaryTreeNodeExists(ThreadedBinaryTree::Tree tree);
 
@@ -227,7 +227,6 @@ void BinaryTreeProgramm()
             break;
         }
     }
-
 }
 
 BinaryTree::Tree* CreateRandomBinaryTree()
@@ -332,7 +331,7 @@ void ThreadedBinaryTreeProgram()
                 binaryTree = new ThreadedBinaryTree::Tree();
             }
 
-            AddThreadedBinaryTreeNode(*binaryTree);
+            AddThreadedBinaryTreeNode(binaryTree);
             break;
         case 3:
             if (binaryTree != nullptr)
@@ -378,7 +377,7 @@ ThreadedBinaryTree::Tree* CreateRandomThreadedBinaryTree()
     return binaryTree;
 }
 
-void AddThreadedBinaryTreeNode(ThreadedBinaryTree::Tree tree)
+void AddThreadedBinaryTreeNode(ThreadedBinaryTree::Tree* tree)
 {
     int nodeValue = 0;
 
@@ -386,7 +385,7 @@ void AddThreadedBinaryTreeNode(ThreadedBinaryTree::Tree tree)
     cin >> nodeValue;
     cout << "\n";
 
-    tree.Add(nodeValue);
+    tree->Add(nodeValue);
 }
 
 void RemoveThreadedBinaryTreeNode(ThreadedBinaryTree::Tree* tree)

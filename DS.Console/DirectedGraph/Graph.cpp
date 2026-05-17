@@ -28,7 +28,7 @@ int Graph::GetTheMostAccessibleVertex()
 
 		for (size_t j = 0; j < AdjacencyMatrix.size(); j++)
 		{
-			if (AdjacencyMatrix[i][j] > 0)
+			if (AdjacencyMatrix[j][i] > 0)
 			{
 				vertexPathes++;
 			}
@@ -83,6 +83,17 @@ vector<int> Graph::GetAdjacentVertices(int vertex)
 		if (AdjacencyMatrix[vertex][i] > 0)
 		{
 			vertices.push_back(i);
+		}
+	}
+
+	for (size_t i = 0; i < AdjacencyMatrix.size(); i++)
+	{
+		if (AdjacencyMatrix[i][vertex] > 0)
+		{
+			if (count(vertices.begin(), vertices.end(), i) < 1)
+			{
+				vertices.push_back(i);
+			}
 		}
 	}
 
